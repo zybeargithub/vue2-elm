@@ -1,11 +1,17 @@
 <template>
   	<div class="city_container">
+        <!--传入动态变量，cityname-->
         <head-top :head-title="cityname" go-back='true'>
+            <!--传入 changecity slot-->
             <router-link to="/home" slot="changecity" class="change_city">切换城市</router-link>
         </head-top>
+
+        <!--使用form表单-->
+        <!--submit.prevent用于阻止浏览器的默认行为的特殊写法-->
         <form class="city_form" v-on:submit.prevent>
             <div>
-                <input type="search" name="city" placeholder="输入学校、商务楼、地址" class="city_input input_style" required v-model='inputVaule'>
+              <!--placeholder 提前-->
+              <input type="search" name="city" placeholder="输入学校、商务楼、地址" class="city_input input_style" required v-model='inputVaule'>
             </div>
             <div>
                 <input type="submit" name="submit" class="city_submit input_style" @click='postpois' value="提交">
@@ -122,7 +128,7 @@
         @include ct;
     }
     .city_form{
-        background-color: #fff;
+        background-color: $fc;
         border-top: 1px solid $bc;
         border-bottom: 1px solid $bc;
         padding-top: 0.4rem;

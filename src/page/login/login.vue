@@ -99,7 +99,8 @@
             changePassWordType(){
                 this.showPassword = !this.showPassword;
             },
-            //获取验证吗，线上环境使用固定的图片，生产环境使用真实的验证码
+            // 获取验证吗，线上环境使用固定的图片，生产环境使用真实的验证码
+            // 为什么会使用 async 和 await 来取代 ajax??
             async getCaptchaCode(){
                 let res = await getcaptchas();
                 this.captchaCodeImg = res.code;

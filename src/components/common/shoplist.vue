@@ -1,7 +1,13 @@
 <template>
 	<div class="shoplist_container">
+
+    <!--使用ul标签，处理列表，语义化-->
+    <!--v-load-more标签用于处理，下拉到底部获取更多-->
+    <!--ul 的 type属性在html4中是不支持使用的-->
+    <!--v-if的判断条件是 array.length，而不是length > 0-->
 		<ul v-load-more="loaderMore" v-if="shopListArr.length" type="1">
-			<router-link :to="{path: 'shop', query:{geohash, id: item.id}}" v-for="item in shopListArr" tag='li' :key="item.id" class="shop_li">
+			<router-link :to="{path: 'shop', query:{geohash, id: item.id}}"
+                   v-for="item in shopListArr" tag='li' :key="item.id" class="shop_li">
 				<section>
 					<img :src="imgBaseUrl + item.image_path" class="shop_img">
 				</section>
@@ -116,12 +122,12 @@ export default {
 				this.showBackStatus = status;
 			});
 		},
-		//到达底部加载更多数据
+		// 到达底部加载更多数据
 		async loaderMore(){
 			if (this.touchend) {
 				return
 			}
-			//防止重复请求
+			// 防止重复请求
 			if (this.preventRepeatReuqest) {
 				return
 			}

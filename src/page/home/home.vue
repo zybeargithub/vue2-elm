@@ -1,6 +1,8 @@
 <template>
   	<div>
+        <!--静态传入sigin-up的变量-->
         <head-top signin-up='home'>
+            <!--填入headtop组件内容的slot中-->
             <span slot='logo' class="head_logo"  @click="reload">ele.me</span>
         </head-top>
         <nav class="city_nav">
@@ -8,19 +10,21 @@
                 <span>当前定位城市：</span>
                 <span>定位不准时，请在城市列表中选择</span>
             </div>
+
+            <!--使用路由传递参数-->
             <router-link :to="'/city/' + guessCityid" class="guess_city">
                 <span>{{guessCity}}</span>
                 <svg class="arrow_right">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
                 </svg>
-            </router-link>  
+            </router-link>
         </nav>
         <section id="hot_city_container">
             <h4 class="city_title">热门城市</h4>
             <ul class="citylistul clear">
                 <router-link  tag="li" v-for="item in hotcity" :to="'/city/' + item.id" :key="item.id">
                     {{item.name}}
-                </router-link>  
+                </router-link>
             </ul>
         </section>
         <section class="group_city_container">
@@ -33,7 +37,7 @@
                         <router-link  tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id" class="ellipsis">
                             {{item.name}}
 
-                        </router-link>  
+                        </router-link>
                     </ul>
                 </li>
             </ul>
@@ -55,6 +59,7 @@ export default {
         }
     },
 
+  // 先渲染，后再获取数据，提高效率
 	mounted(){
         // 获取当前城市
         cityGuess().then(res => {
@@ -73,6 +78,7 @@ export default {
         })
     },
 
+    // 引用headTop组件
     components:{
         headTop
     },
@@ -173,7 +179,7 @@ export default {
             @include sc(0.475rem, #999);
         }
     }
-    
+
     .letter_classify_li{
         margin-bottom: 0.4rem;
         background-color: #fff;

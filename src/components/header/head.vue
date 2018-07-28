@@ -1,7 +1,12 @@
 <template>
     <header id='head_top'>
+         <!--slot类似于一个坑（空壳），需要父组件填充-->
+         <!--多个slot需要name来和父组件找对应关系-->
         <slot name='logo'></slot>
+
+        <!--搜索栏-->
         <slot name='search'></slot>
+        <!--router.go(-1) 调转到上一个历史页面-->
         <section class="head_goback" v-if="goBack" @click="$router.go(-1)">
             <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" version="1.1">
                 <polyline points="12,18 4,9 12,0" style="fill:none;stroke:rgb(255,255,255);stroke-width:2"/>
@@ -36,6 +41,7 @@
             this.getUserInfo();
 
         },
+        // 父组件传递过来的变量
         props: ['signinUp', 'headTitle', 'goBack'],
         computed: {
             ...mapState([
@@ -52,6 +58,8 @@
 
 </script>
 
+<!--SCSS的语法-->
+<!--scoped是一种私有的表现-->
 <style lang="scss" scoped>
     @import '../../style/mixin';
 
