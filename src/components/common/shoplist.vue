@@ -1,4 +1,6 @@
 <template>
+
+  <!--并未定义宽和高-->
 	<div class="shoplist_container">
 
     <!--使用ul标签，处理列表，语义化-->
@@ -6,14 +8,19 @@
     <!--ul 的 type属性在html4中是不支持使用的-->
     <!--v-if的判断条件是 array.length，而不是length > 0-->
 		<ul v-load-more="loaderMore" v-if="shopListArr.length" type="1">
+      <!--单点击跳转标签，并带v-for-->
+      <!-- :to 路由带参数-->
+      <!--为router-link制定tag属性，结果为渲染成tag属性指定-->
 			<router-link :to="{path: 'shop', query:{geohash, id: item.id}}"
                    v-for="item in shopListArr" tag='li' :key="item.id" class="shop_li">
 				<section>
+          <!--可以绑定 :src-->
 					<img :src="imgBaseUrl + item.image_path" class="shop_img">
 				</section>
 				<hgroup class="shop_right">
 					<header class="shop_detail_header">
-						<h4 :class="item.is_premium? 'premium': ''" class="" class="shop_title ellipsis">{{item.name}}</h4>
+						<h4 :class="item.is_premium? 'premium': ''"
+                class="" class="shop_title ellipsis">{{item.name}}</h4>
 						<ul class="shop_detail_ul">
 							<li v-for="item in item.supports" :key="item.id" class="supports">{{item.icon_name}}</li>
 						</ul>
@@ -63,6 +70,8 @@
 			</svg>
 		</aside>
 		<div ref="abc" style="background-color: red;"></div>
+
+    <!--使用loading组件，并使用transition过度动画-->
 		<transition name="loading">
 			<loading v-show="showLoading"></loading>
 		</transition>
@@ -98,7 +107,8 @@ export default {
 		loading,
 		ratingStar,
 	},
-	props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType', 'deliveryMode', 'supportIds', 'confirmSelect', 'geohash'],
+	props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType',
+    'deliveryMode', 'supportIds', 'confirmSelect', 'geohash'],
 	mixins: [loadMore, getImgPath],
 	computed: {
 		...mapState([
@@ -109,6 +119,7 @@ export default {
 		// console.log(this.supportIds, this.sortByType)
 	},
 	methods: {
+	  // 获取数据，采用async和await组合，来取代ajax和promise
 		async initData(){
 			//获取数据
 			let res = await shopList(this.latitude, this.longitude, this.offset, this.restaurantCategoryId);

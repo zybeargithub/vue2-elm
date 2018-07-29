@@ -19,7 +19,8 @@
     		<div class="swiper-container" v-if="foodTypes.length">
 		        <div class="swiper-wrapper">
 		            <div class="swiper-slide food_types_container" v-for="(item, index) in foodTypes" :key="index">
-	            		<router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}" v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
+	            		<router-link :to="{path: '/food', query: {geohash, title: foodItem.title, restaurant_category_id: getCategoryId(foodItem.link)}}"
+                               v-for="foodItem in item" :key="foodItem.id" class="link_to_food">
 
                     <!--figure为图文标签-->
                     <figure>
@@ -42,6 +43,7 @@
 	    	</header>
 
         <!--使用shop-list组件-->
+        <!--geohash传一个变量进入到组件中-->
 	    	<shop-list v-if="hasGetData" :geohash="geohash"></shop-list>
     	</div>
 
