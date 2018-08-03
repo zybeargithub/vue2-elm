@@ -105,10 +105,14 @@ export default {
 	},
 	components: {
 		loading,
-		ratingStar,
+		ratingStar,// 未使用
 	},
 	props: ['restaurantCategoryId', 'restaurantCategoryIds', 'sortByType',
     'deliveryMode', 'supportIds', 'confirmSelect', 'geohash'],
+  /**
+   * 定义一部分公共的方法或者计算属性,然后混入到各个组件中使用,方便管理与统一修改
+   * 公共属性和方法，才使用mixins
+   */
 	mixins: [loadMore, getImgPath],
 	computed: {
 		...mapState([

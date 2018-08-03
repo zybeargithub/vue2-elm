@@ -66,6 +66,7 @@ export const loadMore = {
 	}
 };
 
+// 使用混入的方式，来实现方法的共用
 export const getImgPath = {
 	methods: {
 		//传递过来的图片地址需要处理后才能正常使用

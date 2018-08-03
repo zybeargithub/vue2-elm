@@ -1,37 +1,51 @@
 <template>
     <div class="food_container">
+      <!--back和title-->
     	<head-top :head-title="headTitle" goBack="true"></head-top>
+      <!--预定早餐，排序，筛选容器-->
     	<section class="sort_container">
+        <!--预定早餐-->
     		<div class="sort_item" :class="{choose_type:sortBy == 'food'}" >
     			<div class="sort_item_container" @click="chooseType('food')">
     				<div class="sort_item_border">
+
+              <!--标题【eg: 预定早餐】-->
     					<span :class="{category_title: sortBy == 'food'}">{{foodTitle}}</span>
+
+              <!--下三黑色角-->
 		    			<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
 			    			<polygon points="0,3 10,3 5,8"/>
 			    		</svg>
     				</div>
     			</div>
+
+          <!--使用过度，来显示 category[eg:早餐] 列表-->
 	    		<transition name="showlist" v-show="category">
 	    			<section v-show="sortBy == 'food'" class="category_container sort_detail_type">
 	    				<section class="category_left">
 	    					<ul>
-	    						<li v-for="(item, index) in category" :key="index" class="category_left_li" :class="{category_active:restaurant_category_id == item.id}" @click="selectCategoryName(item.id, index)">
-									<section>
-										<img :src="getImgPath(item.image_url)" v-if="index" class="category_icon">
-										<span>{{item.name}}</span>
-									</section>
-									<section>
-	    								<span class="category_count">{{item.count}}</span>
-	    								<svg v-if="index" width="8" height="8" xmlns="http://www.w3.org/2000/svg" version="1.1" class="category_arrow" >
-							    			<path d="M0 0 L6 4 L0 8"  stroke="#bbb" stroke-width="1" fill="none"/>
-							    		</svg>
-									</section>
+	    						<li v-for="(item, index) in category" :key="index" class="category_left_li"
+                      :class="{category_active:restaurant_category_id == item.id}"
+                      @click="selectCategoryName(item.id, index)">
+                    <section>
+                      <img :src="getImgPath(item.image_url)" v-if="index" class="category_icon">
+                      <span>{{item.name}}</span>
+                    </section>
+                    <section>
+                        <span class="category_count">{{item.count}}</span>
+                        <svg v-if="index" width="8" height="8" xmlns="http://www.w3.org/2000/svg"
+                             version="1.1" class="category_arrow" >
+                          <path d="M0 0 L6 4 L0 8"  stroke="#bbb" stroke-width="1" fill="none"/>
+                        </svg>
+                    </section>
 	    						</li>
 	    					</ul>
 	    				</section>
 	    				<section class="category_right">
 	    					<ul>
-	    						<li v-for="(item, index) in categoryDetail" v-if="index" :key="item.id" class="category_right_li" @click="getCategoryIds(item.id, item.name)" :class="{category_right_choosed: restaurant_category_ids == item.id || (!restaurant_category_ids)&&index == 0}">
+	    						<li v-for="(item, index) in categoryDetail" v-if="index" :key="item.id"
+                      class="category_right_li" @click="getCategoryIds(item.id, item.name)"
+                      :class="{category_right_choosed: restaurant_category_ids == item.id || (!restaurant_category_ids)&&index == 0}">
 	    							<span>{{item.name}}</span>
 	    							<span>{{item.count}}</span>
 	    						</li>
@@ -40,15 +54,24 @@
 	    			</section>
 	    		</transition>
     		</div>
+
+        <!--排序-->
+        <!--给class-->
     		<div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
+
+          <!--标题栏-->
     			<div class="sort_item_container" @click="chooseType('sort')">
     				<div class="sort_item_border">
 		    			<span :class="{category_title: sortBy == 'sort'}">排序</span>
-		    			<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
+              <!--下三角 svg 图标-->
+		    			<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg"
+                   version="1.1" class="sort_icon">
 			    			<polygon points="0,3 10,3 5,8"/>
 			    		</svg>
     				</div>
     			</div>
+
+          <!--过度动画UI-->
 	    		<transition name="showlist">
 	    			<section v-show="sortBy == 'sort'" class="sort_detail_type">
 	    				<ul class="sort_list_container" @click="sortList($event)">
@@ -166,7 +189,13 @@
     		<div class="back_cover" v-show="sortBy"></div>
     	</transition>
     	<section class="shop_list_container">
-	    	<shop-list :geohash="geohash" :restaurantCategoryId="restaurant_category_id" :restaurantCategoryIds="restaurant_category_ids" :sortByType='sortByType' :deliveryMode="delivery_mode" :confirmSelect="confirmStatus" :supportIds="support_ids" v-if="latitude"></shop-list>
+
+        <!--调度 shop-list 组件-->
+	    	<shop-list :geohash="geohash" :restaurantCategoryId="restaurant_category_id"
+                   :restaurantCategoryIds="restaurant_category_ids"
+                   :sortByType='sortByType' :deliveryMode="delivery_mode"
+                   :confirmSelect="confirmStatus" :supportIds="support_ids" v-if="latitude">
+        </shop-list>
     	</section>
     </div>
 </template>
@@ -180,23 +209,23 @@ import {msiteAddress, foodCategory, foodDelivery, foodActivity} from 'src/servic
 
 export default {
 	data(){
-        return {
-        	geohash: '', // city页面传递过来的地址geohash
-            headTitle: '', // msiet页面头部标题
-            foodTitle: '', // 排序左侧头部标题
-            restaurant_category_id: '', // 食品类型id值
-            restaurant_category_ids: '', //筛选类型的id
-            sortBy: '', // 筛选的条件
-            category: null, // category分类左侧数据
-            categoryDetail: null, // category分类右侧的详细数据
-            sortByType: null, // 根据何种方式排序
-            Delivery: null, // 配送方式数据
-            Activity: null, // 商家支持活动数据
-            delivery_mode: null, // 选中的配送方式
-            support_ids: [], // 选中的商铺活动列表
-            filterNum: 0, // 所选中的所有样式的集合
-            confirmStatus: false, // 确认选择
-        }
+    return {
+      geohash: '', // city页面传递过来的地址geohash
+      headTitle: '', // msiet页面头部标题
+      foodTitle: '', // 排序左侧头部标题
+      restaurant_category_id: '', // 食品类型id值
+      restaurant_category_ids: '', //筛选类型的id
+      sortBy: '', // 筛选的条件
+      category: null, // category分类左侧数据
+      categoryDetail: null, // category分类右侧的详细数据
+      sortByType: null, // 根据何种方式排序
+      Delivery: null, // 配送方式数据
+      Activity: null, // 商家支持活动数据
+      delivery_mode: null, // 选中的配送方式
+      support_ids: [], // 选中的商铺活动列表
+      filterNum: 0, // 所选中的所有样式的集合
+      confirmStatus: false, // 确认选择
+    }
     },
     created(){
     	this.initData();
@@ -216,44 +245,48 @@ export default {
     		'RECORD_ADDRESS'
     	]),
     	//初始化获取数据
-        async initData(){
-        	//获取从msite页面传递过来的参数
-			this.geohash = this.$route.query.geohash;
-			this.headTitle = this.$route.query.title;
-			this.foodTitle = this.headTitle;
-			this.restaurant_category_id = this.$route.query.restaurant_category_id;
-			//防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
-			if (!this.latitude) {
-		    	//获取位置信息
-		    	let res = await msiteAddress(this.geohash);
-		    	// 记录当前经度纬度进入vuex
-			    this.RECORD_ADDRESS(res);
-			}
-		    //获取category分类左侧数据
-	    	this.category = await foodCategory(this.latitude, this.longitude);
-	    	//初始化时定位当前category分类左侧默认选择项，在右侧展示出其sub_categories列表
-			this.category.forEach(item => {
-				if (this.restaurant_category_id == item.id) {
-					this.categoryDetail = item.sub_categories;
-				}
-			});
-			//获取筛选列表的配送方式
-			this.Delivery = await foodDelivery(this.latitude, this.longitude);
-			//获取筛选列表的商铺活动
-	    	this.Activity = await foodActivity(this.latitude, this.longitude);
-	    	//记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
-	    	this.Activity.forEach((item, index) => {
-	    		this.support_ids[index] = {status: false, id: item.id};
-	    	})
-        },
+      async initData(){
+        //获取从msite页面传递过来的参数
+        this.geohash = this.$route.query.geohash;
+        this.headTitle = this.$route.query.title;
+        this.foodTitle = this.headTitle;
+        this.restaurant_category_id = this.$route.query.restaurant_category_id;
+
+        //防止刷新页面时，vuex状态丢失，经度纬度需要重新获取，并存入vuex
+        // 页面刷新，vuex还会丢失状态？
+        if (!this.latitude) {
+          //获取位置信息
+          let res = await msiteAddress(this.geohash);
+          // 记录当前经度纬度进入vuex
+          this.RECORD_ADDRESS(res);
+        }
+
+        //获取category分类左侧数据
+        this.category = await foodCategory(this.latitude, this.longitude);
+        //初始化时定位当前category分类左侧默认选择项，在右侧展示出其sub_categories列表
+        this.category.forEach(item => {
+          if (this.restaurant_category_id == item.id) {
+            this.categoryDetail = item.sub_categories;
+          }
+        });
+
+        //获取筛选列表的配送方式
+        this.Delivery = await foodDelivery(this.latitude, this.longitude);
+        //获取筛选列表的商铺活动
+        this.Activity = await foodActivity(this.latitude, this.longitude);
+        //记录support_ids的状态，默认不选中，点击状态取反，status为true时为选中状态
+        this.Activity.forEach((item, index) => {
+            this.support_ids[index] = {status: false, id: item.id};
+        })
+      },
     	// 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
     	async chooseType(type){
     		if (this.sortBy !== type) {
     			this.sortBy = type;
     			//food选项中头部标题发生改变，需要特殊处理
     			if (type == 'food') {
-					this.foodTitle = '分类';
-    			}else{
+					  this.foodTitle = '分类';
+    			} else {
     				//将foodTitle 和 headTitle 进行同步
     				this.foodTitle = this.headTitle;
     			}
@@ -359,6 +392,7 @@ export default {
 		box-sizing: border-box;
 		.sort_item{
 			@include sc(0.55rem, #444);
+      /*百分等比-33.3%*/
 			@include wh(33.3%, 1.6rem);
 			text-align: center;
 			line-height: 1rem;
