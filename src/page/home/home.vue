@@ -3,7 +3,7 @@
         <!--静态传入sigin-up的变量-->
         <head-top signin-up='home'>
             <!--填入headtop组件内容的slot中-->
-            <span slot='logo' class="head_logo"  @click="reload">ele.me</span>
+            <span slot='logo' class="head_logo"  @click="reload">ele.me---</span>
         </head-top>
         <nav class="city_nav">
             <div class="city_tip">
@@ -36,7 +36,6 @@
                     <ul class="groupcity_name_container citylistul clear">
                         <router-link  tag="li" v-for="item in value" :to="'/city/' + item.id" :key="item.id" class="ellipsis">
                             {{item.name}}
-
                         </router-link>
                     </ul>
                 </li>

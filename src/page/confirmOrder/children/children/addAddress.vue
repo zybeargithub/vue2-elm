@@ -29,14 +29,17 @@
                         <input type="text" name="phone" placeholder="你的手机号" v-model="phone" class="input_style">
                         <img src="../../../../images/add_phone.png" height="20" width="20" @click="phone_bk = true">
                     </div>
-                    <input v-if="phone_bk" type="text" name="anntherPhoneNumber" placeholder="备选电话" v-model="anntherPhoneNumber" class="input_style phone_bk">
+                    <input v-if="phone_bk" type="text" name="anntherPhoneNumber" placeholder="备选电话"
+                           v-model="anntherPhoneNumber" class="input_style phone_bk">
                 </section>
             </section>
             <section class="section_list">
                 <span class="section_left">送餐地址</span>
                 <section class="section_right">
-                    <router-link to="/confirmOrder/chooseAddress/addAddress/searchAddress" tag="div" class="choose_address">{{searchAddress? searchAddress.name : '小区/写字楼/学校等'}}</router-link>
-                    <input type="text" name="address_detail" placeholder="详细地址（如门牌号等）" v-model="address_detail" class="input_style">
+                    <router-link to="/confirmOrder/chooseAddress/addAddress/searchAddress" tag="div"
+                                 class="choose_address">{{searchAddress? searchAddress.name : '小区/写字楼/学校等'}}</router-link>
+                    <input type="text" name="address_detail" placeholder="详细地址（如门牌号等）"
+                           v-model="address_detail" class="input_style">
 
                 </section>
             </section>

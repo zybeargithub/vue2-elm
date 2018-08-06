@@ -12,9 +12,9 @@ textarea, button, input, select, figure, figcaption{
     color: #333;
     font-weight: normal;
     font-family: "Microsoft Yahei";
-    box-sizing: border-box;
+    box-sizing: border-box;//
     -webkit-tap-highlight-color:transparent;
-    -webkit-font-smoothing: antialiased;
+    -webkit-font-smoothing: antialiased; // 字体抗锯齿
     &:hover{
         outline: none;
     }
