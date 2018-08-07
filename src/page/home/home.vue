@@ -3,7 +3,7 @@
         <!--静态传入sigin-up的变量-->
         <head-top signin-up='home'>
             <!--填入headtop组件内容的slot中-->
-            <span slot='logo' class="head_logo"  @click="reload">ele.me---</span>
+            <span slot='logo' class="head_logo"  @click="reload">ele.me</span>
         </head-top>
         <nav class="city_nav">
             <div class="city_tip">
@@ -60,6 +60,10 @@ export default {
 
   // 先渲染，后再获取数据，提高效率
 	mounted(){
+
+        // 2018-08-07
+        // cityGuess方法是一层封装
+        
         // 获取当前城市
         cityGuess().then(res => {
             this.guessCity = res.name;

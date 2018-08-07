@@ -2,7 +2,7 @@
     <header id='head_top'>
          <!--slot类似于一个坑（空壳），需要父组件填充-->
          <!--多个slot需要name来和父组件找对应关系-->
-        <slot name='logo'> aaa </slot>
+        <slot name='logo'></slot>
 
         <!--搜索栏-->
         <slot name='search'></slot>
